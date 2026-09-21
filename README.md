@@ -54,3 +54,12 @@ Links
 * [Issue tracker](https://github.com/EngineHub/WorldGuard/issues)
 * [Continuous integration](https://builds.enginehub.org) [![Build Status](https://ci.enginehub.org/app/rest/builds/buildType:bt11,branch:master/statusIcon.svg)](http://ci.enginehub.org/viewType.html?buildTypeId=bt11&guest=1)
 * [End-user documentation](https://worldguard.enginehub.org/en/latest/)
+
+### Returning Loyalty tridents in protected worlds
+
+Set `regions.allow-owner-loyalty-trident-pickup: true` in a world's
+`config.yml` to let players recover their own thrown Loyalty tridents despite
+WorldGuard's item-pickup protection. This is disabled by default. Ground items,
+arrows, other players' tridents, and tridents without Loyalty still follow the
+normal region checks. Other plugins can still cancel pickup; inventory capacity
+and trident ownership remain enforced by the server.

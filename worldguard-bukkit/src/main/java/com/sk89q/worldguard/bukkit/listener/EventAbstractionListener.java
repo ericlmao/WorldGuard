@@ -84,6 +84,7 @@ import org.bukkit.entity.Painting;
 import org.bukkit.entity.Player;
 import org.bukkit.entity.Tameable;
 import org.bukkit.entity.ThrownPotion;
+import org.bukkit.entity.Trident;
 import org.bukkit.entity.WindCharge;
 import org.bukkit.entity.minecart.HopperMinecart;
 import org.bukkit.event.Cancellable;
@@ -144,6 +145,7 @@ import org.bukkit.event.player.PlayerInteractAtEntityEvent;
 import org.bukkit.event.player.PlayerInteractEntityEvent;
 import org.bukkit.event.player.PlayerInteractEvent;
 import org.bukkit.event.player.PlayerItemConsumeEvent;
+import org.bukkit.event.player.PlayerPickupArrowEvent;
 import org.bukkit.event.player.PlayerPickupItemEvent;
 import org.bukkit.event.player.PlayerShearEntityEvent;
 import org.bukkit.event.player.PlayerTakeLecternBookEvent;
@@ -999,8 +1001,22 @@ public class EventAbstractionListener extends AbstractListener {
     @EventHandler(ignoreCancelled = true)
     public void onPlayerPickupItem(PlayerPickupItemEvent event) {
         if (getWorldConfig(event.getPlayer().getWorld()).isEventDisabled(event.getEventName())) return;
+        if (getWorldConfig(event.getPlayer().getWorld()).allowOwnerLoyaltyTridentPickup
+                && isOwnerLoyaltyTridentReturn(event)) {
+            return;
+        }
         Item item = event.getItem();
         pickupDebounce.debounce(event.getPlayer(), item, event, new DestroyEntityEvent(event, create(event.getPlayer()), event.getItem()));
+    }
+
+    // PlayerPickupArrowEvent shares the legacy pickup HandlerList. The Item in
+    // that event is a synthetic pickup representation, not ordinary ground loot.
+    static boolean isOwnerLoyaltyTridentReturn(PlayerPickupItemEvent event) {
+        return event instanceof PlayerPickupArrowEvent pickup
+                && pickup.getArrow() instanceof Trident trident
+                && trident.getLoyaltyLevel() > 0
+                && trident.getShooter() instanceof Player owner
+                && owner.getUniqueId().equals(event.getPlayer().getUniqueId());
     }
 
     @EventHandler(ignoreCancelled = true)
