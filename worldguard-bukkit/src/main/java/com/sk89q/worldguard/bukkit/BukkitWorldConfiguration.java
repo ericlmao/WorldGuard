@@ -72,6 +72,7 @@ public class BukkitWorldConfiguration extends YamlWorldConfiguration {
     public TargetMatcherSet allowAllInteract;
     public TargetMatcherSet blockUseAtFeet;
     public boolean usePaperEntityOrigin;
+    public boolean allowOwnerLoyaltyTridentPickup;
     /* Configuration data end */
 
     /**
@@ -290,6 +291,9 @@ public class BukkitWorldConfiguration extends YamlWorldConfiguration {
         allowedSnowFallOver = new HashSet<>(convertLegacyBlocks(getStringList("dynamics.snow-fall-blocks", null)));
 
         worldEventChecker = new WorldEventChecker(Set.copyOf(getStringList("events.disabled", null)), getBoolean("events.whitelist-mode", false));
+
+        allowOwnerLoyaltyTridentPickup = getBoolean(
+                "regions.allow-owner-loyalty-trident-pickup", false);
 
         useRegions = getBoolean("regions.enable", true);
         regionInvinciblityRemovesMobs = getBoolean("regions.invincibility-removes-mobs", false);

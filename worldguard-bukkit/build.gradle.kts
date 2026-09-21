@@ -21,6 +21,9 @@ dependencies {
         exclude("junit", "junit")
     }
 
+    "testImplementation"(libs.paperApi)
+    "testImplementation"("org.mockito:mockito-core:5.14.2")
+
     "implementation"(libs.paperLib)
     "implementation"(libs.bstats.bukkit)
 }
