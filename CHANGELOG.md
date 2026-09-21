@@ -1,5 +1,12 @@
 # Changelog
 
+## 7.0.16
+
+* Update to 1.21.11.
+* Added experimental Folia support.
+* Workaround an issue where some item/block names aren't adequately translated by the client.
+* Workaround a duplication bug in Paper.
+
 ## 7.0.15
 
 * Update to 1.21.10
